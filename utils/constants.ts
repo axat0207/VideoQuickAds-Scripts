@@ -1,0 +1,1 @@
+export const quickadsLogo =  "https://assets-global.website-files.com/64b11f315314a4ef84c12744/64b6ea3396b81f6613411c51_svg%20logo.svg"

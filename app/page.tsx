@@ -1,5 +1,9 @@
+import Main from "./Main";
+
 export default function Home() {
   return (
-   <div>Video Script</div>
+   <div>
+      <Main/>
+   </div>
   )
 }
