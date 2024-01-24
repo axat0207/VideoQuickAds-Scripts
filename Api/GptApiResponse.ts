@@ -15,12 +15,12 @@ interface Store {
 
 const openai = new OpenAI({
   // apiKey: process.env.OPENAI_API_KEY,
-  apiKey: "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",
+  
   dangerouslyAllowBrowser: true,
 });
 
 
-const  {brandName, brandDiscription, productName, productDiscription, targetAudience, platform, voiceTone, duration   } = useStore() as Store;
+// const  {brandName, brandDiscription, productName, productDiscription, targetAudience, platform, voiceTone, duration   } = useStore as Store;
 
 async function gptResponse() {
   const chatCompletion = await openai.chat.completions.create({
@@ -67,7 +67,7 @@ async function gptResponse() {
   if (chatCompletion.choices.length > 0 && chatCompletion.choices[0].message) {
     return chatCompletion.choices[0].message.content;
   } else {
-    return "No response received";
+    return "No response received" ;
   }
 }
 
