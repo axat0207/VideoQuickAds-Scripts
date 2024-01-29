@@ -1,37 +1,71 @@
 "use client";
 import { useEffect, useState } from "react";
-import useStore from '@/store/useStore';
+import generateConceptAPI from "@/Api/generateConceptAPI"; // Make sure the import matches the export
+import useConceptStore from "@/store/useConceptStore";
+import AdObjectiveDropdown from "./smallComponents/AdObjectiveDropdown";
+import MultiSelectInput from "./smallComponents/MultiSelectPlatform";
+import DurationDropdown from "./smallComponents/DurationDropdown";
 interface Store {
   setContextData: (data: any) => void;
-  // define other properties and methods as needed
+}
+interface ConceptApiResponse {
+  concept_name: string;
+  core_desire: string[];
+  solved_problem: string;
+  emotion_to_evoke: string[];
+  angle: string;
 }
 export default function Context() {
-  //   const [adObjective, setAdobjective] = useState([]);
-
-  const { setContextData } = useStore() as Store;
-
+  const [selectedAdObjective, setSelectedAdObjective] = useState("Awareness");
   const [brandName, setBrandName] = useState("");
-  const [brandDiscription, setBrandDiscription] = useState("");
+  const [brandDescription, setbrandDescription] = useState("");
   const [productName, setProductName] = useState("");
-  const [productDiscription, setproductDiscription] = useState("");
+  const [productDescription, setproductDescription] = useState("");
   const [targetAudience, setTargetAudience] = useState("");
-  const [platform, setPlatform] = useState([]);
+  const [selectedPlatform, setSelectedPlatform] = useState<string[]>([]);
+
   const [voiceTone, setVoiceTone] = useState("");
-  const [duration, setDuration] = useState("");
-  const adContextData = {brandName, brandDiscription, productName, productDiscription, targetAudience, platform, voiceTone, duration  }
-  setContextData(adContextData);
-  console.log("this is adcontext data : "+ adContextData)
+  const [duration, setDuration] = useState("5-15 sec");
+  const adContextData = {
+    selectedAdObjective,
+    brandName,
+    brandDescription,
+    productName,
+    productDescription,
+    targetAudience,
+    selectedPlatform,
+    voiceTone,
+    duration,
+  };
+
+  // setContextData(adContextData);
+
+  const fetchData = async () => {
+    const jsonResponse = await generateConceptAPI(adContextData);
+    if (jsonResponse !== null) {
+      const response = JSON.parse(jsonResponse) as ConceptApiResponse;
+      //@ts-ignore
+      useConceptStore.getState().setConceptData(response);
+    }
+  };
+
+  const updateStore = () => {
+     fetchData();
+  };
+
   return (
     <div>
-      <div className="px-6 py-4 w-96 flex flex-col gap-3 bg-white rounded-md shadow-lg h-[80vh] overflow-y-scroll">
+      <div className="h-[80vh] overflow-y-scroll px-6 py-4 min-w-max flex flex-col gap-3 bg-white rounded-md shadow-lg ">
         <div className=" text-lg font-bold">Content & Set-up</div>
         <hr />
         <div className="text-sm text-gray-400">
           The more information, the better AI generates results are.
         </div>
         <div>
-          <div>Ad Objective</div>
-          <input className="w-full border rounded-lg px-2 py-1 " type="text" />
+          <AdObjectiveDropdown
+            selected={selectedAdObjective}
+            setSelected={setSelectedAdObjective}
+          />
         </div>
         <div>
           <div>Brand name</div>
@@ -44,7 +78,7 @@ export default function Context() {
         <div>
           <div>Brand discription</div>
           <textarea
-            onChange={(e) => setBrandDiscription(e.target.value)}
+            onChange={(e) => setbrandDescription(e.target.value)}
             className="w-full border rounded-lg px-2 py-1 "
           ></textarea>
         </div>
@@ -59,7 +93,7 @@ export default function Context() {
         <div>
           <div>Product/Service discription</div>
           <textarea
-            onChange={(e) => setproductDiscription(e.target.value)}
+            onChange={(e) => setproductDescription(e.target.value)}
             className="w-full border rounded-lg px-2 py-1 "
           ></textarea>
         </div>
@@ -78,27 +112,22 @@ export default function Context() {
             type="text"
           />
         </div>
+        <MultiSelectInput
+          options={["Facebook", "Instagram", "TikTok", "Linkedin", "Youtube"]}
+          selected={selectedPlatform}
+          onChange={setSelectedPlatform}
+        />
         <div>
-          <div>Platform</div>
-          <input
-            //   onChange={(e)=>setPlatform(e.target.value)}
-            className="w-full border rounded-lg px-2 py-1 "
-            type="text"
-          />
-        </div>
-        <div>
-          <div>Video Duration</div>
-          <input
-            onChange={(e) => setDuration(e.target.value)}
-            className="w-full border rounded-lg px-2 py-1 "
-            type="text"
-          />
-        </div>
-        <div className="">
-          <hr />
-          <button className=" mt-4 rounded-lg bg-[#6938ef] px-3 py-2 shadow-lg text-white w-fit ">
-            Save & Generate Concept
-          </button>
+          <DurationDropdown selected={duration} setSelected={setDuration} />
+          <div className="">
+            <hr />
+            <button
+              onClick={updateStore}
+              className=" mt-4 rounded-lg bg-[#6938ef] px-3 py-2 shadow-lg text-white w-fit "
+            >
+              Save & Generate Concept
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ export default function Main() {
   return (
     <div className="h-[100vh] bg-slate-100">
       <Navbar />
-      <div className="flex gap-7 px-16 pt-6 overflow-hidden">
+      <div className="flex gap-7 px-16 pt-6  overflow-x-auto">
         <Context />
         <Concept />
         <Hook />

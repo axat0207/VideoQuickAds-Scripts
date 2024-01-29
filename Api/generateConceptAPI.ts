@@ -1,12 +1,11 @@
 import OpenAI from "openai";
-import useStore from "@/store/useStore";
 
-interface Store {
-  setContextData: (data: any) => void;
+interface ContextStore {
+  adObjective: String;
   brandName: string;
-  brandDiscription: string;
+  brandDescription: string;
   productName: string;
-  productDiscription: string;
+  productDescription: string;
   targetAudience: string;
   platform: string;
   voiceTone: string;
@@ -14,24 +13,47 @@ interface Store {
 }
 
 const openai = new OpenAI({
-  // apiKey: process.env.OPENAI_API_KEY,
-  
+  // apiKey: "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",
   dangerouslyAllowBrowser: true,
 });
 
-
-// const  {brandName, brandDiscription, productName, productDiscription, targetAudience, platform, voiceTone, duration   } = useStore as Store;
-
-async function gptResponse() {
+async function generateConceptAPI({
+  selectedAdObjective= 'Awarness',
+  brandName,
+  brandDescription,
+  productName,
+  productDescription,
+  targetAudience,
+  selectedPlatform,
+  voiceTone,
+  duration,
+}: any) {
+  console.log({
+    selectedAdObjective,
+    brandName,
+    brandDescription,
+    productName,
+    productDescription,
+    targetAudience,
+    selectedPlatform,
+    voiceTone,
+    duration,
+  });
   const chatCompletion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: `create a ad concepts from the below context:
-      ad-objective :  Awareness(Make potential customer become more familer with your business)
-      Brand Name : Nike
-      Brand Discription : Nike Sports Shoe selling website   
-      Target Audience : Younster
-      Tone of voice : aggressive 
-      platform : Instagram,
-      video duration :  15-20sec
+    messages: [
+      {
+        role: "user",
+        content: `
+      create a ad concepts from the below context:
+      ad-objective :  ${selectedAdObjective}
+      Brand Name : ${brandName}
+      Brand Discription : ${brandDescription}
+      Product Name : ${productName}
+      Product Descriiption : ${productDescription}
+      Target Audience : ${targetAudience}
+      Tone of voice : ${voiceTone}
+      platform : ${selectedPlatform},
+      video duration :  ${duration}
       Please give: 
       Concept name,
       Core desire,
@@ -59,16 +81,17 @@ async function gptResponse() {
         ]
       }
       
-      
-   ` }],
+   `,
+      },
+    ],
     model: "gpt-3.5-turbo",
   });
   // Assuming chatCompletion is the response object from the OpenAI API
-  if (chatCompletion.choices.length > 0 && chatCompletion.choices[0].message) {
+  if (chatCompletion.choices.length > 0 && chatCompletion.choices[0].message && brandName && productName) {
     return chatCompletion.choices[0].message.content;
   } else {
-    return "No response received" ;
+    return null;
   }
 }
 
-export default gptResponse;
+export default generateConceptAPI;
