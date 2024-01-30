@@ -13,7 +13,7 @@ interface ContextStore {
 }
 
 const openai = new OpenAI({
-  // apiKey: "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",
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
