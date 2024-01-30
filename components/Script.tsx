@@ -162,11 +162,7 @@ const Script: React.FC = () => {
                       </tbody>
                     </table>
                   </div>
-                  <div className="flex justify-end mt-2">
-                    <div className="cursor-pointer border px-4 py-1 rounded-md bg-[#6938ef] text-white w-fit">
-                      Generate Script
-                    </div>
-                  </div>
+                 
                 </div>
               ))}
             </div>
