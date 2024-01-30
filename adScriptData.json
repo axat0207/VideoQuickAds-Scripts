@@ -1,0 +1,40 @@
+{
+  "Ad_Script": [
+    {
+      "Script_Number": 1,
+      "Pain": {
+        "On_Screen_Visual": "Pain On-Screen Visual 1",
+        "Voice_Over": "Pain Voice-Over 1",
+        "Text_Overlay": "Pain Text Overlay 1"
+      },
+      "Agitate": {
+        "On_Screen_Visual": "Agitate On-Screen Visual 1",
+        "Voice_Over": "Agitate Voice-Over 1",
+        "Text_Overlay": "Agitate Text Overlay 1"
+      },
+      "Solve": {
+        "On_Screen_Visual": "Solve On-Screen Visual 1",
+        "Voice_Over": "Solve Voice-Over 1",
+        "Text_Overlay": "Solve Text Overlay 1"
+      }
+    },
+    {
+      "Script_Number": 2,
+      "Pain": {
+        "On_Screen_Visual": "Pain On-Screen Visual 2",
+        "Voice_Over": "Pain Voice-Over 2",
+        "Text_Overlay": "Pain Text Overlay 2"
+      },
+      "Agitate": {
+        "On_Screen_Visual": "Agitate On-Screen Visual 2",
+        "Voice_Over": "Agitate Voice-Over 2",
+        "Text_Overlay": "Agitate Text Overlay 2"
+      },
+      "Solve": {
+        "On_Screen_Visual": "Solve On-Screen Visual 2",
+        "Voice_Over": "Solve Voice-Over 2",
+        "Text_Overlay": "Solve Text Overlay 2"
+      }
+    }
+  ]
+}
