@@ -55,7 +55,7 @@ export default function Context() {
 
   return (
     <div>
-      <div className="h-[80vh] overflow-y-scroll px-6 py-4 min-w-max flex flex-col gap-3 bg-white rounded-md shadow-lg ">
+      <div className="h-[80vh] overflow-y-scroll px-6 py-4 min-w-96 max-w-3xl flex flex-col gap-3 bg-white rounded-md shadow-lg ">
         <div className=" text-lg font-bold">Content & Set-up</div>
         <hr />
         <div className="text-sm text-gray-400">

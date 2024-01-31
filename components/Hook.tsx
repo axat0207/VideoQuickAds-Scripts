@@ -36,6 +36,7 @@ export default function Hook() {
       Visual_Hook: hookItem.Visual_Hook,
       Voice_Over: hookItem.Voice_Over,
       Text_Overlay: hookItem.Text_Overlay,
+      Video_Framework : selectedFramework,
     };
 
     const jsonResponse = await generateScriptAPI(hookObject);
@@ -48,7 +49,7 @@ export default function Hook() {
   };
   if (!isDataAvailable) {
     return (
-      <div className=" h-fit min-w-max p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+      <div className=" h-fit min-w-96 max-w-3xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
         <div className="flex items-center justify-between mx-4">
           <div className="text-lg font-bold">Hook</div>
           <div className="">|||</div>
@@ -65,7 +66,7 @@ export default function Hook() {
 
   return (
     <>
-      <div className=" h-[80vh] overflow-y-scroll min-w-max p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+      <div className=" h-[80vh] overflow-y-scroll min-w-96 max-w-xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
         <div className="flex items-center justify-between pt-2 mx-4">
           <div className="text-lg font-bold">Hook</div>
           <div className="border cursor-pointer rounded-lg shadow-md text-white px-3 py-2 bg-[#6938ef]">
@@ -109,19 +110,21 @@ export default function Hook() {
                 <div>
                   <div className="cursor-pointer border px-2 py-1 rounded-md bg-[#6938ef] mt-2 text-white w-fit flex justify-end">
                     <Dialog>
-                      <DialogTrigger>Generate Script</DialogTrigger>
+                      <DialogTrigger>
+                        <div className="">Generate Script</div>
+                      </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Generate Video Script</DialogTitle>
+                          <DialogTitle className="text-xl font-bold border-b pb-2">Generate Video Script</DialogTitle>
                           <DialogDescription>
-                            <div className="mt-6 flex flex-col gap-4">
+                            <div className="mt-3 flex flex-col gap-4">
                               <VideoFrameworkDropdown
                                 selected={selectedFramework}
                                 setSelected={setSelectedFramework}
                               />
                               <div>
-                                <div>Scripts Elements</div>
-                                <div className="flex flex-col">
+                                <div className="text-lg font-bold">Scripts Elements : </div>
+                                <div className="flex flex-col gap-1">
                                   {[
                                     "Voice-Over",
                                     "Text-Overlay",
@@ -153,10 +156,9 @@ export default function Hook() {
                                 </div>
                               </div>
                               <DialogPrimitive.Close>
-                                {" "}
                                 <div
                                   onClick={() => generateScript(hookItem)}
-                                  className="border cursor-pointer rounded-lg w-fit text-white px-2 py-1 bg-[#6938ef]"
+                                  className="border cursor-pointer rounded-lg w-fit text-white px-3 py-2 bg-[#6938ef]"
                                 >
                                   Generate Script
                                 </div>

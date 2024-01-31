@@ -25,7 +25,7 @@ export default function Concept() {
   };
   if (!isDataAvailable) {
     return (
-        <div className=" h-fit min-w-max p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+        <div className=" h-fit min-w-96 max-w-3xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
         <div className="flex items-center justify-between mx-4">
           <div className="text-lg font-bold">Concept</div>
           <div className="">|||</div>
@@ -42,7 +42,7 @@ export default function Concept() {
 
   return (
     <>
-      <div className=" h-[80vh] overflow-y-scroll min-w-max p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+      <div className=" h-[80vh] overflow-y-scroll min-w-96 max-w-3xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
         <div className="flex items-center justify-between pt-2 mx-4">
           <div className="text-lg font-bold">Concept</div>
           <div className="border cursor-pointer rounded-lg shadow-md text-white px-3 py-2 bg-[#6938ef]">

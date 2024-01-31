@@ -1,5 +1,6 @@
 import useScriptStore from "@/store/useScriptStore";
 import adScriptData from "../adScriptData.json";
+import { useState } from "react";
 
 interface AdScript {
   Script_Number: number;
@@ -117,60 +118,78 @@ interface AdScript {
 // }
 
 const Script: React.FC = () => {
-  const jsonData: { Ad_Script: AdScript[] } = adScriptData;
+    const scriptResponse = useScriptStore((state: any) => state.scriptData);
+  const isDataAvailable = Object.keys(scriptResponse).length > 0;
 
+const [adFramework, setAdFramework] = useState(scriptResponse?.Framework)
+  console.log(scriptResponse)
+    if (!isDataAvailable) {
+    return (
+      <div className=" h-fit min-w-fit p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+        <div className="flex items-center justify-between mx-4">
+          <div className="text-lg font-bold">Script</div>
+          <div className="">|||</div>
+        </div>
+        <hr />
+        <div className="py-8 px-4">
+          Hook are required to generate ad Scripts. Please generate or create{" "}
+          <br />
+          concepts on the left 👈, and generate hooks from a Hook.
+        </div>
+      </div>
+    );
+  }
   return (
     <>
-      <div>
-        {jsonData ? (
-          <div className=" h-[80vh] overflow-y-scroll min-w-max p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
-            <div className="flex items-center justify-between pt-2 mx-4">
-              <div className="text-lg font-bold">Script</div>
-              <div className="border cursor-pointer rounded-lg shadow-md text-white px-3 py-2 bg-[#6938ef]">
-                Generate More
-              </div>
-            </div>
-            <hr />
-            <div className="">
-              {jsonData.Ad_Script.map((script, index) => (
-                <div key={index} className="px-4 bg-gray-100 py-2 rounded-lg mt-2">
-                  <div className="flex gap-4 pt-2 items-center text-[#6938ef]">
-                    <span className="font-bold">Script {script.Script_Number}</span>
-                    <span className="border px-2 text-sm py-1 rounded-lg border-[#6938ef] bg-[#d2c2ff]">
-                      Framework: PAS (Pain, Agitate, Solve)
-                    </span>
-                  </div>
-                  <div className="mt-3">
-                    <table className="min-w-full">
-                      <thead>
-                        <tr>
-                          <th className="text-left text-gray-400">Ad block type</th>
-                          <th className="text-left text-gray-400">On-screen visual</th>
-                          <th className="text-left text-gray-400">Voice-over</th>
-                          <th className="text-left text-gray-400">Text-overlay</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {["Pain", "Agitate", "Solve"].map((type) => (
-                          <tr key={type} className="border-b">
-                            <td className="py-2">{type}</td>
-                            <td>{(script as any)[type].On_Screen_Visual}</td>
-                            <td>{(script as any)[type].Voice_Over}</td>
-                            <td>{(script as any)[type].Text_Overlay}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                 
-                </div>
-              ))}
+    <div>
+      {scriptResponse ? (
+        <div className="h-[80vh] overflow-y-scroll min-w-32 max-w-3xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
+          <div className="flex items-center justify-between pt-2 mx-4">
+            <div className="text-lg font-bold">Script</div>
+            <div className="cursor-pointer rounded-lg shadow-md text-white px-3 py-2 bg-[#6938ef]">
+              Generate More
             </div>
           </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
+          <hr />
+          <div>
+            {scriptResponse.Ad_Script?.map((script:any, index:any) => (
+              <div key={index} className="px-4 bg-gray-100 py-2 rounded-lg mt-2">
+                <div className="flex gap-4 pt-2 items-center text-[#6938ef]">
+                  <span className="font-bold">Script {script.Script_Number}</span>
+                  <span className="border px-2 text-sm py-1 rounded-lg border-[#6938ef] bg-[#d2c2ff]">
+                    Framework: {adFramework}
+                  </span>
+                </div>
+                <div className="mt-3">
+                  <div className="w-[40vw]">
+                    <div>
+                      <div className="flex">
+                        <div className=" w-full text-gray-400">Ad block type</div>
+                        <div className=" w-full text-gray-400">On-screen visual</div>
+                        <div className=" w-full text-gray-400">Voice-over</div>
+                        <div className=" w-full text-gray-400">Text-overlay</div>
+                      </div>
+                    </div>
+                    <div>
+                      {Object.keys(script).filter(key => key !== 'Script_Number' && key !== 'Framework').map((type) => (
+                        <div key={type} className=" border-b flex items-center my-3 gap-5">
+                          <div className="font-bold w-full">{type}</div>
+                          <div className=" w-full">{script[type].On_Screen_Visual}</div>
+                          <div className=" w-full">{script[type].Voice_Over}</div>
+                          <div className=" w-full">{script[type].Text_Overlay}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
     </>
   );
 };

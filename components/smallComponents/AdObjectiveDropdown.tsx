@@ -24,7 +24,7 @@ export default function AdObjectiveDropdown({ selected, setSelected } :any) {
   return (
     <div ref={dropdownRef} className="relative">
       <label htmlFor="ad-objective" className="block text-gray-700">
-        * Ad Objective
+        Ad Objective
       </label>
       <button
         id="ad-objective"

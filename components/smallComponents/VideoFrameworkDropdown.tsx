@@ -1,26 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function VideoFrameworkDropdown({
-  selected,
-  setSelected,
-}: any) {
+export default function VideoFrameworkDropdown({ selected, setSelected }: any) {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const options = [
-    "USP",
-    "FAB",
-    "PAS",
-    "AIDA",
-    "EMPATH",
-    "SEP",
-    "4Ps",
-    "BAB",
-    "PAPA",
-    "4Us",
-    "EPIC",
-    "PSB",
+    "AIDA (Attention, Interest, Desire, Action)",
+    "PAS (Pain, Agitate, Solve)",
+    "FAB (Features, Advantages, Benefits)",
+    "USP (Unique Selling Proposition)",
+    "EMPATH (Engage, Motivate, Promote, Acknowledge, Tailor, Highlight)",
+    "SEP (Story, Emotion, Point)",
+    "4Ps (Picture, Promise, Proof, Push)",
+    "BAB (Before-After-Bridge)",
+    "PAPA (Problem, Agitate, Persuade, Asks)",
+    "4Us (Useful, Urgent, Unique, Ultra-specific)",
+    "EPIC (Educate, Promote, Inform, Convert)",
+    "PSB (Problem-Solution-Benefit)",
   ];
 
   useEffect(() => {
@@ -40,8 +37,8 @@ export default function VideoFrameworkDropdown({
   console.log(selected + " : seconds");
   return (
     <div ref={dropdownRef} className="relative">
-      <label htmlFor="duration" className="block  text-gray-700">
-        Video Duration
+      <label htmlFor="duration" className="block text-lg font-bold mb-2  text-gray-700">
+        Video Framework
       </label>
       <button
         id="VideoDuration"

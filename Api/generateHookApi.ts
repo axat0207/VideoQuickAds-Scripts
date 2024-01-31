@@ -24,6 +24,7 @@ async function generateHookAPI({concept_name, core_desire, solved_problem, emoti
     based on this generated concept generate a hook for a video ad that contain Central  Idea , visual Hook in short, voice-over and text-overlay 
     Each element should be succinct yet impactful, driving the core message
     Focus on delivering a powerful message that resonates small yet impactfull
+    visual hook should be under in 15 words limit
     only in json and give two result in an array for example
     [
       {
