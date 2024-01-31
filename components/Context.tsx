@@ -5,6 +5,8 @@ import useConceptStore from "@/store/useConceptStore";
 import AdObjectiveDropdown from "./smallComponents/AdObjectiveDropdown";
 import MultiSelectInput from "./smallComponents/MultiSelectPlatform";
 import DurationDropdown from "./smallComponents/DurationDropdown";
+import Loader from "./smallComponents/Loader";
+import { IoMdLock } from "react-icons/io";
 interface Store {
   setContextData: (data: any) => void;
 }
@@ -26,6 +28,8 @@ export default function Context() {
 
   const [voiceTone, setVoiceTone] = useState("");
   const [duration, setDuration] = useState("5-15 sec");
+
+  const [isLoading, setIsLoading] = useState(false);
   const adContextData = {
     selectedAdObjective,
     brandName,
@@ -46,11 +50,13 @@ export default function Context() {
       const response = JSON.parse(jsonResponse) as ConceptApiResponse;
       //@ts-ignore
       useConceptStore.getState().setConceptData(response);
+      setIsLoading(false);
     }
   };
 
   const updateStore = () => {
-     fetchData();
+    setIsLoading(true);
+    fetchData();
   };
 
   return (
@@ -123,9 +129,21 @@ export default function Context() {
             <hr />
             <button
               onClick={updateStore}
-              className=" mt-4 rounded-lg bg-[#6938ef] px-3 py-2 shadow-lg text-white w-fit "
+              className={`mt-4 rounded-lg px-3 py-2 shadow-lg w-fit ${
+                isLoading
+                  ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                  : "bg-[#6938ef] text-white"
+              }`}
+              disabled={isLoading}
             >
-              Save & Generate Concept
+              <div className="flex gap-2">
+                <span>Save & Generate Concept</span>
+                {isLoading && (
+                  <span>
+                    <Loader />
+                  </span>
+                )}
+              </div>
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 export default function DurationDropdown({ selected, setSelected }: any) {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +44,12 @@ export default function DurationDropdown({ selected, setSelected }: any) {
         className="border px-2 py-1 rounded-md w-full flex flex-start"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selected}
+        <div className="flex items-center w-full justify-between mt-1 ">
+          <div className="">{selected}</div>{" "}
+          <div className="">
+            <IoIosArrowDropdown />
+          </div>
+        </div>
       </button>
 
       {isOpen && (

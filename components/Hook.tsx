@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import VideoFrameworkDropdown from "./smallComponents/VideoFrameworkDropdown";
+import Loader from "./smallComponents/Loader";
+import { IoMdLock } from "react-icons/io";
 
 export default function Hook() {
   const [selectedFramework, setSelectedFramework] = useState("PAS");
@@ -21,7 +23,6 @@ export default function Hook() {
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-
     if (checked && !selectedCheckboxes.includes(name)) {
       setSelectedCheckboxes([...selectedCheckboxes, name]);
     } else if (!checked) {
@@ -30,13 +31,14 @@ export default function Hook() {
       );
     }
   };
+  const [isLoading, setIsLoading] = useState(false);
   const generateScript = async (hookItem: any) => {
     const hookObject = {
       Central_Idea: hookItem.Central_Idea,
       Visual_Hook: hookItem.Visual_Hook,
       Voice_Over: hookItem.Voice_Over,
       Text_Overlay: hookItem.Text_Overlay,
-      Video_Framework : selectedFramework,
+      Video_Framework: selectedFramework,
     };
 
     const jsonResponse = await generateScriptAPI(hookObject);
@@ -45,14 +47,15 @@ export default function Hook() {
 
       //@ts-ignore
       useScriptStore.getState().setScriptData(response);
+      setIsLoading(false);
     }
   };
   if (!isDataAvailable) {
     return (
       <div className=" h-fit min-w-96 max-w-3xl p-2 flex flex-col gap-3 bg-white rounded-md shadow-md">
-        <div className="flex items-center justify-between mx-4">
+       <div className="flex items-center justify-between mx-4">
           <div className="text-lg font-bold">Hook</div>
-          <div className="">|||</div>
+          <div className="text-2xl"><IoMdLock /></div>
         </div>
         <hr />
         <div className="py-8 px-4">
@@ -111,11 +114,20 @@ export default function Hook() {
                   <div className="cursor-pointer border px-2 py-1 rounded-md bg-[#6938ef] mt-2 text-white w-fit flex justify-end">
                     <Dialog>
                       <DialogTrigger>
-                        <div className="">Generate Script</div>
+                        <div className="flex gap-2 items-center justify-center">
+                          <span>Generate Hook</span>{" "}
+                          {isLoading && (
+                            <span>
+                              <Loader />
+                            </span>
+                          )}
+                        </div>
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle className="text-xl font-bold border-b pb-2">Generate Video Script</DialogTitle>
+                          <DialogTitle className="text-xl font-bold border-b pb-2">
+                            Generate Video Script
+                          </DialogTitle>
                           <DialogDescription>
                             <div className="mt-3 flex flex-col gap-4">
                               <VideoFrameworkDropdown
@@ -123,7 +135,9 @@ export default function Hook() {
                                 setSelected={setSelectedFramework}
                               />
                               <div>
-                                <div className="text-lg font-bold">Scripts Elements : </div>
+                                <div className="text-lg font-bold">
+                                  Scripts Elements :{" "}
+                                </div>
                                 <div className="flex flex-col gap-1">
                                   {[
                                     "Voice-Over",
@@ -156,12 +170,26 @@ export default function Hook() {
                                 </div>
                               </div>
                               <DialogPrimitive.Close>
-                                <div
-                                  onClick={() => generateScript(hookItem)}
-                                  className="border cursor-pointer rounded-lg w-fit text-white px-3 py-2 bg-[#6938ef]"
+                                <button
+                                  onClick={() => {
+                                    setIsLoading(true);
+                                    generateScript(hookItem);
+                                  }}
+                                  className={`mt-4 rounded-lg px-3 py-2 shadow-lg w-fit ${
+                                    isLoading
+                                      ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                                      : "bg-[#6938ef] text-white"
+                                  }`}
                                 >
-                                  Generate Script
-                                </div>
+                                  <div className="flex gap-2 items-center justify-center">
+                                    <span>Generate Hook</span>{" "}
+                                    {isLoading && (
+                                      <span>
+                                        <Loader />
+                                      </span>
+                                    )}
+                                  </div>
+                                </button>
                               </DialogPrimitive.Close>
                             </div>
                           </DialogDescription>
